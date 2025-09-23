@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/catalog")
 public record HomeController() {
 
-    @GetMapping("/")
+    @GetMapping({"", "/"})
     public String getGreeting() {
         log.info("Received request for greeting");
 
-        return "Welcome to books catalog!";
+        return "Welcome to bazinga's books catalog!";
     }
 }
