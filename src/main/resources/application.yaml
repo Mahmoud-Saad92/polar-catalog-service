@@ -1,0 +1,15 @@
+application:
+  version: @project.version@
+  title: BZA[catalog-service]
+
+spring:
+  application:
+    name: catalog-service
+  profiles:
+    active: ${ACTIVE_PROFILE:local}
+
+logging:
+  level:
+    com.bazinga.eg.catalogservice: warn
+    org.springframework.boot: warn
+    org.springframework.web: warn
