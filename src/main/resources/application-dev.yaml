@@ -1,6 +1,3 @@
-server:
-  port: 8135
-
 logging:
   level:
     com.bazinga.eg.catalogservice: info
