@@ -2,6 +2,9 @@ application:
   version: @project.version@
   title: BZA[catalog-service]
 
+server:
+  port: ${SERVER_PORT:8135}
+
 spring:
   application:
     name: catalog-service
@@ -16,6 +19,9 @@ springdoc:
     operationsSorter: method
     tagsSorter: alpha
   show-actuator: false
+
+custom:
+  host-port: ${HOST_PORT:8080}
 
 logging:
   level:

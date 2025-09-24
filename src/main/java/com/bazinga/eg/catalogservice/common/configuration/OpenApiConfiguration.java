@@ -12,7 +12,7 @@ import java.util.List;
 
 public class OpenApiConfiguration {
 
-    @Value("${server.port:8080}")
+    @Value("${custom.host-port}")
     private String serverPort;
 
     @Bean
