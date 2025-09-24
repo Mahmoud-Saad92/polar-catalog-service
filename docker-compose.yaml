@@ -1,6 +1,7 @@
 services:
   app:
     container_name: catalog-service
+    image: catalog-service:0.0.1
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,4 +12,3 @@ services:
     environment:
       ACTIVE_PROFILE: ${ACTIVE_PROFILE}
       SERVER_PORT: ${CONTAINER_PORT}
-      HOST_PORT: ${HOST_PORT}
