@@ -12,16 +12,17 @@
     <description>Manages the books in the catalog</description>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <maven-compiler.source>17</maven-compiler.source>
-        <maven-compiler.target>17</maven-compiler.target>
+        <maven-compiler.source>21</maven-compiler.source>
+        <maven-compiler.target>21</maven-compiler.target>
         <maven-compiler.version>3.14.0</maven-compiler.version>
         <maven-resources.version>3.3.1</maven-resources.version>
         <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
 
         <spring-boot.version>3.5.6</spring-boot.version>
+        <springdoc-openapi.version>2.8.13</springdoc-openapi.version>
         <lombok.version>1.18.42</lombok.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
@@ -45,6 +46,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- OPENAPI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi.version}</version>
         </dependency>
 
         <!-- TOOLS -->
