@@ -2,6 +2,9 @@ application:
   version: @project.version@
   title: BZA[catalog-service]
 
+server:
+  port: ${SERVER_PORT:8080}
+
 spring:
   application:
     name: catalog-service
