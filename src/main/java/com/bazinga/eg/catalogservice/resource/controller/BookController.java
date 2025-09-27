@@ -31,7 +31,7 @@ public record BookController(BookService bookService) {
     }
 
     @PostMapping
-    public ResponseEntity<Book> create(@Valid @RequestBody NewBook newBook, UriComponentsBuilder ucb) {
+    public ResponseEntity<Void> create(@Valid @RequestBody NewBook newBook, UriComponentsBuilder ucb) {
         log.info("Request for adding a new book to catalog: {}", newBook);
 
         Book addedBookToCatalog = bookService.addBookToCatalog(new Book(newBook));
