@@ -23,7 +23,7 @@ jobs:
           chmod +x mvnw
           ./mvnw clean verify
       - name: Code vulnerability scanning
-        uses: anchore/scan-action@v5
+        uses: anchore/scan-action@v7
         id: scan
         with:
           path: "${{ github.workspace }}"
