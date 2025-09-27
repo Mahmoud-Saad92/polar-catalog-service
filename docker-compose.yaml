@@ -1,0 +1,14 @@
+services:
+  app:
+    container_name: catalog-service
+    image: catalog-service:0.0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    ports:
+      - "${HOST_PORT}:${CONTAINER_PORT}"
+    environment:
+      ACTIVE_PROFILE: ${ACTIVE_PROFILE}
+      SERVER_PORT: ${CONTAINER_PORT}

@@ -2,11 +2,23 @@ application:
   version: @project.version@
   title: BZA[catalog-service]
 
+server:
+  port: ${SERVER_PORT:8080}
+
 spring:
   application:
     name: catalog-service
   profiles:
     active: ${ACTIVE_PROFILE:local}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+  show-actuator: false
 
 logging:
   level:
