@@ -20,6 +20,10 @@ springdoc:
     tagsSorter: alpha
   show-actuator: false
 
+catalog:
+  test-data:
+    enabled: false
+
 logging:
   level:
     com.bazinga.eg.catalogservice: warn
