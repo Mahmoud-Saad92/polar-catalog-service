@@ -1,3 +1,16 @@
+server:
+  tomcat:
+    connection-timeout: 2s
+    keep-alive-timeout: 15s
+    threads:
+      max: 50
+      min-spare: 5
+
+catalog:
+  greeting-message: "Welcome to bazinga's books catalog!"
+  test-data:
+    enabled: true
+
 logging:
   level:
     com.bazinga.eg.catalogservice: debug
