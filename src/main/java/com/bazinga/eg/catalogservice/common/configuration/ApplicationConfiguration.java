@@ -4,6 +4,7 @@ import com.bazinga.eg.catalogservice.application.domain.repository.BookRepositor
 import com.bazinga.eg.catalogservice.application.service.BookService;
 import com.bazinga.eg.catalogservice.application.service.impl.BookServiceImpl;
 import com.bazinga.eg.catalogservice.common.dataloader.BookDataLoader;
+import com.bazinga.eg.catalogservice.common.property.CatalogProperties;
 import com.bazinga.eg.catalogservice.common.property.CatalogTestDataProperties;
 import com.bazinga.eg.catalogservice.persistence.mapper.BookPersistableMapper;
 import com.bazinga.eg.catalogservice.persistence.repository.InMemoryBookRepositoryImpl;
@@ -26,6 +27,11 @@ public class ApplicationConfiguration {
     @Bean
     public BookService bookService(BookRepository bookRepository) {
         return new BookServiceImpl(bookRepository);
+    }
+
+    @Bean
+    public CatalogProperties catalogProperties() {
+        return new CatalogProperties();
     }
 
     @Bean

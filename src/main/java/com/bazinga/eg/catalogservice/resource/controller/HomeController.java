@@ -1,5 +1,6 @@
 package com.bazinga.eg.catalogservice.resource.controller;
 
+import com.bazinga.eg.catalogservice.common.property.CatalogProperties;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/catalog")
 @Tag(name = "Home", description = "Home endpoints for the catalog service")
-public record HomeController() {
+public record HomeController(CatalogProperties catalogProperties) {
 
     @GetMapping("/")
     @Operation(
@@ -26,6 +27,6 @@ public record HomeController() {
     public String getGreeting() {
         log.info("Received request for greeting");
 
-        return "Welcome to bazinga's books catalog!";
+        return catalogProperties.getGreetingMessage();
     }
 }

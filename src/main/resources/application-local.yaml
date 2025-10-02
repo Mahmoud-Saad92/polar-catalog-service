@@ -7,6 +7,7 @@ server:
       min-spare: 5
 
 catalog:
+  greeting-message: "Welcome to bazinga's books catalog!"
   test-data:
     enabled: true
 
