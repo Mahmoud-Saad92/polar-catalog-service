@@ -3,25 +3,46 @@ application:
   title: BZA[catalog-service]
 
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${SERVER_PORT}
 
 spring:
   application:
     name: catalog-service
   profiles:
-    active: ${ACTIVE_PROFILE:local}
+    active: ${ACTIVE_PROFILE}
+  config:
+    import: 'optional:configserver:'
+  cloud:
+    config:
+      uri: http://${CONFIG_SERVER_URI}:${CONFIG_SERVER_PORT}
+      fail-fast: false
+      enabled: false
 
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    operationsSorter: method
-    tagsSorter: alpha
-  show-actuator: false
+---
+# Configuration for all profiles EXCEPT local and it
+spring:
+  config:
+    activate:
+      on-profile: "!local,!it"
+  cloud:
+    config:
+      enabled: true
+      fail-fast: true
+      retry:
+        max-attempts: 6
+        initial-interval: 1000
+        max-interval: 2000
+        multiplier: 1.1
+      request-connect-timeout: 5000
+      request-read-timeout: 5000
 
-logging:
-  level:
-    com.bazinga.eg.catalogservice: warn
-    org.springframework.boot: warn
-    org.springframework.web: warn
+---
+# Configuration for local and it profiles (Config Server disabled)
+spring:
+  config:
+    activate:
+      on-profile: "local,it"
+  cloud:
+    config:
+      enabled: false
+      fail-fast: false
