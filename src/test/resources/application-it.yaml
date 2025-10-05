@@ -1,3 +1,9 @@
+spring:
+  datasource:
+    hikari:
+      schema: catalogsvc
+    url: jdbc:tc:postgresql:15:///polar_db?currentSchema=catalogsvc
+
 catalog:
   test-data:
     enabled: true

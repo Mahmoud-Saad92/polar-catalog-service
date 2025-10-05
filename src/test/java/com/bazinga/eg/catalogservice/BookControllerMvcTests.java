@@ -5,6 +5,8 @@ import com.bazinga.eg.catalogservice.application.service.BookService;
 import com.bazinga.eg.catalogservice.common.exception.ExceptionFactory;
 import com.bazinga.eg.catalogservice.common.exception.enums.ExceptionCode;
 import com.bazinga.eg.catalogservice.resource.controller.BookController;
+import com.bazinga.eg.catalogservice.resource.payload.BookDTO;
+import com.bazinga.eg.catalogservice.resource.payload.NewBook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -34,9 +36,11 @@ public class BookControllerMvcTests {
     void whenGetBookExistingThenShouldReturnBook() throws Exception {
         String isbn = "1234567890";
 
-        Book book = new Book(1L, isbn, "Title", "Author", 9.99);
+        NewBook newBook = new NewBook(isbn, "Title", "Author", 9.99);
 
-        given(bookService.viewBookDetails(isbn)).willReturn(book);
+        Book book = new Book(newBook);
+
+        given(bookService.viewBookDetails(isbn)).willReturn(new BookDTO(book));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/catalog/books/" + isbn))
                 .andExpect(status().isOk())

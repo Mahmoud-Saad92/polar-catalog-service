@@ -6,14 +6,13 @@ import com.bazinga.eg.catalogservice.persistence.mapper.BookPersistableMapper;
 import com.bazinga.eg.catalogservice.persistence.repository.model.BookPersistable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Repository
@@ -29,11 +28,30 @@ public class InMemoryBookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public Iterable<Book> findAll() {
-        return BOOKS_MAP.values()
+    public Iterable<Book> findAll(Pageable pageable) {
+        List<Book> allBooks = BOOKS_MAP.values()
                 .stream()
                 .map(bookPersistableMapper::toBook)
-                .collect(Collectors.toList());
+                .sorted((b1, b2) -> {
+                    if (pageable.getSort().isSorted()) {
+                        return pageable.getSort().stream()
+                                .map(order -> compareByOrder(b1, b2, order))
+                                .filter(result -> result != 0)
+                                .findFirst()
+                                .orElse(0);
+                    }
+                    return 0;
+                })
+                .toList();
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), allBooks.size());
+
+        if (start >= allBooks.size()) {
+            return List.of();
+        }
+
+        return allBooks.subList(start, end);
     }
 
     @Override
@@ -63,5 +81,26 @@ public class InMemoryBookRepositoryImpl implements BookRepository {
     @Override
     public void deleteByIsbn(String isbn) {
         BOOKS_MAP.remove(isbn);
+    }
+
+    @Override
+    public void deleteAll() {
+        BOOKS_MAP.clear();
+    }
+
+    @Override
+    public void saveAll(Iterable<Book> books) {
+        books.forEach(this::save);
+    }
+
+    private int compareByOrder(Book b1, Book b2, Sort.Order order) {
+        int comparison = switch (order.getProperty()) {
+            case "isbn" -> b1.isbn().compareTo(b2.isbn());
+            case "title" -> b1.title().compareTo(b2.title());
+            case "author" -> b1.author().compareTo(b2.author());
+            case "price" -> b1.price().compareTo(b2.price());
+            default -> 0;
+        };
+        return order.isAscending() ? comparison : -comparison;
     }
 }
