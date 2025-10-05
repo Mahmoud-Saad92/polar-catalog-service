@@ -15,6 +15,7 @@ public interface BookPersistableMapper {
     BookPersistable toBookPersistable(Book book);
 
     @Mapping(source = "id", target = "bookId")
+    @Mapping(source = "createdBy", target = "createdBy")
     Book toBook(BookPersistable bookPersistable);
 
     Collection<BookPersistable> toBookPersistableList(Collection<Book> books);

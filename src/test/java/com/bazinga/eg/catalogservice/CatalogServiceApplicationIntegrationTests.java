@@ -10,7 +10,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("it")
-public class CatalogServiceApplicationTest {
+public class CatalogServiceApplicationIntegrationTests {
 
     @Autowired
     private WebTestClient webTestClient;
