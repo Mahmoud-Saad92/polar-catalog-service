@@ -6,6 +6,17 @@ server:
       max: 50
       min-spare: 5
 
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      schema: catalogsvc
+      connection-timeout: 5000 #5sec
+      maximum-pool-size: 5
+    username: 'polarAdmin'
+    password: 'polar@postgres123!@#'
+    url: jdbc:postgresql://localhost:5432/polar_db?currentSchema=catalogsvc
+
 catalog:
   greeting-message: "Welcome to bazinga's books catalog!"
   test-data:

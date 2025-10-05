@@ -1,11 +1,12 @@
 package com.bazinga.eg.catalogservice.resource.controller;
 
-import com.bazinga.eg.catalogservice.application.domain.model.Book;
 import com.bazinga.eg.catalogservice.application.service.BookService;
+import com.bazinga.eg.catalogservice.resource.payload.BookDTO;
 import com.bazinga.eg.catalogservice.resource.payload.EditBook;
 import com.bazinga.eg.catalogservice.resource.payload.NewBook;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,12 @@ import java.net.URI;
 public record BookController(BookService bookService) {
 
     @GetMapping
-    public ResponseEntity<Iterable<Book>> get() {
-        return ResponseEntity.ok(bookService().viewBookList());
+    public ResponseEntity<Iterable<BookDTO>> get(Pageable pageable) {
+        return ResponseEntity.ok(bookService().viewBookList(pageable));
     }
 
     @GetMapping("{isbn}")
-    public ResponseEntity<Book> getByIsbn(@PathVariable String isbn) {
+    public ResponseEntity<BookDTO> getByIsbn(@PathVariable String isbn) {
         log.info("Request to retrieve book information with isbn [{}]", isbn);
 
         return ResponseEntity.ok(bookService().viewBookDetails(isbn));
@@ -34,7 +35,7 @@ public record BookController(BookService bookService) {
     public ResponseEntity<Void> create(@Valid @RequestBody NewBook newBook, UriComponentsBuilder ucb) {
         log.info("Request for adding a new book to catalog: {}", newBook);
 
-        Book addedBookToCatalog = bookService.addBookToCatalog(new Book(newBook));
+        BookDTO addedBookToCatalog = bookService.addBookToCatalog(newBook);
 
         URI locationOfNewCashCard =
                 ucb
@@ -46,7 +47,7 @@ public record BookController(BookService bookService) {
     }
 
     @PutMapping("{isbn}")
-    public ResponseEntity<Book> update(@PathVariable String isbn, @Valid @RequestBody EditBook editBook) throws MethodArgumentNotValidException {
+    public ResponseEntity<BookDTO> update(@PathVariable String isbn, @Valid @RequestBody EditBook editBook) throws MethodArgumentNotValidException {
         log.info("Request to update exist book with isbn [{}]", isbn);
 
         bookService.editBookDetails(isbn, editBook);
@@ -55,7 +56,7 @@ public record BookController(BookService bookService) {
     }
 
     @DeleteMapping("{isbn}")
-    public ResponseEntity<Book> delete(@PathVariable String isbn) {
+    public ResponseEntity<Void> delete(@PathVariable String isbn) {
         log.info("Request to delete book with isbn [{}]", isbn);
 
         bookService.deleteBookFromCatalog(isbn);
