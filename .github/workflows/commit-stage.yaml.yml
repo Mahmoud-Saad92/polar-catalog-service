@@ -3,7 +3,8 @@ on: push
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: mahmoud-saad92/catalog-service
+  USER_NAME: mahmoud-saad92
+  IMAGE_NAME: catalog-service
   VERSION: 0.0.1
 
 jobs:
@@ -63,7 +64,7 @@ jobs:
         run: |
           chmod +x mvnw
           ./mvnw verify -DskipUTs=true
-          docker build -t catalog-service:0.0.1 .
+          docker build -t ${{ env.IMAGE_NAME }}:${{ env.VERSION }} .
       - name: OCI image vulnerability scanning
         uses: anchore/scan-action@v7
         id: scan
@@ -84,7 +85,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push container image to GitHub Container Registry
         run: |
-          docker tag catalog-service:0.0.1 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          docker tag ${{ env.IMAGE_NAME }}:${{ env.VERSION }} ${{ env.REGISTRY }}/${{env.USER_NAME}}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          docker push ${{ env.REGISTRY }}/${{env.USER_NAME}}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
         
 
