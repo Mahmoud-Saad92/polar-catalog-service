@@ -14,3 +14,26 @@ services:
       SERVER_PORT: ${CONTAINER_PORT}
       CONFIG_SERVER_URI: ${CONFIG_SERVER_URI}
       CONFIG_SERVER_PORT: ${CONFIG_SERVER_PORT}
+      POSTGRES_CONNECTION_TIMEOUT: ${POSTGRES_CONNECTION_TIMEOUT}
+      POSTGRES_MAX_POOL_SIZE: ${POSTGRES_MAX_POOL_SIZE}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOSTNAME: ${POSTGRES_HOSTNAME}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_SCHEMA: ${POSTGRES_SCHEMA}
+    networks:
+      polar-nw:
+        aliases:
+          - 'catalog-service'
+      postgres:
+        aliases:
+          - 'catalog-service'
+
+networks:
+  polar-nw:
+    name: polar-nw
+    external: true
+  postgres:
+    name: polar-postgres-nw
+    external: true
