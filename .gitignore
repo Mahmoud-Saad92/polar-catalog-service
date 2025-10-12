@@ -1,5 +1,5 @@
 target/
-!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -9,7 +9,7 @@ target/
 *.iml
 *.ipr
 
-### Eclipse ###
+### STS ###
 .apt_generated
 .classpath
 .factorypath
@@ -30,6 +30,7 @@ build/
 
 ### VS Code ###
 .vscode/
+bin/
 
 ### Mac OS ###
 .DS_Store

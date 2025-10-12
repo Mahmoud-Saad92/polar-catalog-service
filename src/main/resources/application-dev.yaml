@@ -1,8 +1,0 @@
-server:
-  port: 8135
-
-logging:
-  level:
-    com.bazinga.eg.catalogservice: info
-    org.springframework.boot: info
-    org.springframework.web: info
