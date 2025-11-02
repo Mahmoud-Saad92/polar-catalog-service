@@ -40,6 +40,15 @@ jobs:
         if: success() || failure()
         with:
           sarif_file: "${{ steps.scan.outputs.sarif }}"
+      - name: Setup tools
+        uses: alexellis/setup-arkade@v3
+      - name: Install tools
+        uses: alexellis/arkade-get@master
+        with:
+          kubeconform: latest
+      - name: Validate Kubernetes manifests
+        run: |
+          kubeval --strict -d k8s
 
   package:
     name: Package and Publish
@@ -78,7 +87,7 @@ jobs:
         with:
           sarif_file: "${{ steps.scan.outputs.sarif }}"
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
