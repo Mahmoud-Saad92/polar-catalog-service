@@ -10,7 +10,7 @@ RUN --mount=type=cache,target=/root/.m2/repository \
 # Copy source code and build
 COPY src/ ./src/
 RUN --mount=type=cache,target=/root/.m2/repository \
-    mvn clean package -DskipTests
+    mvn clean package -DskipITs=true
 
 #stage: extract
 FROM eclipse-temurin:21.0.5_11-jre AS extract

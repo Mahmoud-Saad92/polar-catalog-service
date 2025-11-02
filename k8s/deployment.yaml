@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-service
+  labels:
+    app: catalog-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalog-service
+  template:
+    metadata:
+      labels:
+        app: catalog-service
+    spec:
+      containers:
+        - name: catalog-service
+          image: catalog-service:0.0.1
+          imagePullPolicy: IfNotPresent
+          lifecycle: # makes kubernetes wait for 5 seconds before sending SIGTERM to the pod
+            preStop:
+              exec:
+                command: ['sh', '-c', 'sleep 5']
+          ports:
+            - containerPort: 8135
+          env:
+            - name: ACTIVE_PROFILE
+              value: 'dev'
+            - name: SERVER_PORT
+              value: '8135'
+            - name: CONFIG_SERVER_URI
+              value: 'configuration-service'
+            - name: CONFIG_SERVER_PORT
+              value: '80'
+            - name: POSTGRES_HOSTNAME
+              value: 'polar-postgres'
+            - name: POSTGRES_CONNECTION_TIMEOUT
+              value: '5000'
+            - name: POSTGRES_MAX_POOL_SIZE
+              value: '5'
+            - name: POSTGRES_USER
+              value: 'polarAdmin'
+            - name: POSTGRES_PASSWORD
+              value: 'polar@postgres123!@#'
+            - name: POSTGRES_PORT
+              value: '5432'
+            - name: POSTGRES_DB
+              value: 'polar_db'
+            - name: POSTGRES_SCHEMA
+              value: 'catalogsvc'
